@@ -9,6 +9,15 @@ class AtpByCountry():
     def ranking_by_country(self):
         driver = webdriver.Chrome(DRIVER_LOCATION)
         driver.get(BASE_URL)
+
+        table = driver.find_element_by_class_name("mega-table")
+        tbody = table.find_element_by_tag_name("tbody")
+        rows = tbody.find_elements_by_tag_name("tr")
+        for row in rows:
+            cells = row.find_elements_by_tag_name("td")
+            print(cells[3].text)
+            country = cells[2].find_element_by_tag("img")
+            print(country.attr)
         # elementById = driver.find_element_by_id("name")
 
         # if elementById is not None:
