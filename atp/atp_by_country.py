@@ -10,23 +10,24 @@ class AtpByCountry():
         driver = webdriver.Chrome(DRIVER_LOCATION)
         driver.get(BASE_URL)
 
+        points_per_country = {}
+
         table = driver.find_element_by_class_name("mega-table")
         tbody = table.find_element_by_tag_name("tbody")
         rows = tbody.find_elements_by_tag_name("tr")
         for row in rows:
             cells = row.find_elements_by_tag_name("td")
-            print(cells[3].text)
-            country = cells[2].find_element_by_tag("img")
-            print(country.attr)
-        # elementById = driver.find_element_by_id("name")
+            player = cells[3].text
+            country = cells[2].find_element_by_tag_name("img").get_attribute("alt")
+            points = int(cells[5].text.replace(',', ''))
 
-        # if elementById is not None:
-        #     print("We found an element by Id")
+            if country in points_per_country:
+                points_per_country[country] += points
+            else:
+                points_per_country[country] = points
 
-        # elementByName = driver.find_element_by_name("show-hide")
-
-        # if elementByName is not None:
-        #     print("We found an element by Name")
+        for country in points_per_country:
+            print("{}: {}".format(country, points_per_country[country]))
 
 
 atp = AtpByCountry()
