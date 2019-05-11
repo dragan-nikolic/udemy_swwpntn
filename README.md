@@ -5,4 +5,8 @@ Udemy course Selenium WebDriver With Python3 Novice to Ninga (https://www.udemy.
 
 * Python 3
 * Selenium for Python 
-    * pip install selenium
+    * pip3 install selenium
+* webdriver for the browser
+    * chrome: http://chromedriver.chromium.org/downloads
+    * firefox: https://github.com/mozilla/geckodriver/releases
+

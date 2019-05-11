@@ -26,8 +26,10 @@ class AtpByCountry():
             else:
                 points_per_country[country] = points
 
-        for country in points_per_country:
-            print("{}: {}".format(country, points_per_country[country]))
+        sorted_countries = sorted(points_per_country.items(), key=lambda kv: kv[1], reverse=True)
+
+        for country in sorted_countries:
+            print("{}: {}".format(country[0], country[1]))
 
 
 atp = AtpByCountry()
