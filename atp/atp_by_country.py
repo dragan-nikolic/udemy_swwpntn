@@ -1,3 +1,8 @@
+"""
+{country: points, ...}
+{country: {player: points, ...}, ...}
+"""
+
 from selenium import webdriver
 
 BASE_URL = "https://www.atptour.com/en/rankings/singles"
@@ -10,7 +15,8 @@ class AtpByCountry():
         driver = webdriver.Chrome(DRIVER_LOCATION)
         driver.get(BASE_URL)
 
-        points_per_country = {}
+        countries = {}
+        countries_players = {}
 
         table = driver.find_element_by_class_name("mega-table")
         tbody = table.find_element_by_tag_name("tbody")
@@ -21,16 +27,27 @@ class AtpByCountry():
             country = cells[2].find_element_by_tag_name("img").get_attribute("alt")
             points = int(cells[5].text.replace(',', ''))
 
-            if country in points_per_country:
-                points_per_country[country] += points
+            if country in countries:
+                countries[country] += points
             else:
-                points_per_country[country] = points
+                countries[country] = points
+                countries_players[country] = {}
 
-        sorted_countries = sorted(points_per_country.items(), key=lambda kv: kv[1], reverse=True)
+            countries_players[country][player] = points
 
+        sorted_countries = sorted(
+                                countries.items(), 
+                                key=lambda kv: kv[1], 
+                                reverse=True)
+
+        ix = 1
         for country in sorted_countries:
-            print("{}: {}".format(country[0], country[1]))
+            print("{}. {}: {}".format(ix, country[0], country[1]))
+            country_players =  countries_players[country[0]]
+            for player in country_players:
+                print("--- {}: {}".format(player, country_players[player]))
 
+            ix += 1
 
 atp = AtpByCountry()
 atp.ranking_by_country()
